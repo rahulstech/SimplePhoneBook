@@ -18,9 +18,12 @@ public interface ContactDao {
     long addContact(Contact contact);
 
     @Query("SELECT * FROM `contacts` WHERE `id` = :id")
-    LiveData<Contact> getContactById(long id);
+    LiveData<Contact> getLiveContactById(long id);
 
-    @Query("SELECT * FROM `contacts`")
+    @Query("SELECT * FROM `contacts` WHERE `id` = :id")
+    Contact getContactById(long id);
+
+    @Query("SELECT * FROM `contacts` ORDER BY `displayName` COLLATE NOCASE ASC")
     LiveData<List<Contact>> getAllContacts();
 
     @Update

@@ -1,15 +1,18 @@
 package rahulstech.android.namewithphotolist.database.model;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import java.io.File;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import rahulstech.android.namewithphotolist.provider.ContactImageProvider;
 
 @Entity(tableName = "contacts")
 public class Contact {
@@ -58,12 +61,6 @@ public class Contact {
 
     public void setDisplayPhoto(String displayPhoto) {
         this.displayPhoto = displayPhoto;
-        if (TextUtils.isEmpty(displayPhoto)) {
-            dpUri = null;
-        }
-        else {
-            dpUri = Uri.parse(displayPhoto);
-        }
     }
 
     public String getPhoneNumber() {
@@ -82,8 +79,10 @@ public class Contact {
         return placeholder;
     }
 
-    public Uri getDpUri() {
-        return dpUri;
+    public Uri getDpUri(@NonNull Context context) {
+        if (TextUtils.isEmpty(displayPhoto)) return null;
+        File file = new File(ContactImageProvider.getDisplayPhotosDirectory(context),displayPhoto);
+        return Uri.fromFile(file);
     }
 
     @Override

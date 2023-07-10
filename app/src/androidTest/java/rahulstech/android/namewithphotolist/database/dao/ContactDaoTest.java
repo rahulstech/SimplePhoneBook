@@ -62,10 +62,10 @@ public class ContactDaoTest {
     }
 
     @Test
-    public void testGetContactById() throws Exception {
+    public void testGetLiveContactById() throws Exception {
         Handler handler = new Handler(Looper.getMainLooper());
         CountDownLatch latch = new CountDownLatch(1);
-        LiveData<Contact> liveData = contactDao.getContactById(3);
+        LiveData<Contact> liveData = contactDao.getLiveContactById(3);
         Observer<Contact> observer = contact -> {
             Contact expected = new Contact(3,"Subham Poddar","photo_subham.jpg","+918107448855");
             assertEquals(expected,contact);
@@ -85,9 +85,8 @@ public class ContactDaoTest {
             List<Contact> expected = Arrays.asList(
                     new Contact(1,"Arun Sinha","photo_arun.jpg","+917845889966"),
                     new Contact(2,"Barun Roy","photo_barun.jpg","+919856447722"),
-                    new Contact(3,"Subham Poddar","photo_subham.jpg","+918107448855"),
-                    new Contact(4,"Om Prakash","photo_om.jpg","+919569335577")
-
+                    new Contact(4,"Om Prakash","photo_om.jpg","+919569335577"),
+                    new Contact(3,"Subham Poddar","photo_subham.jpg","+918107448855")
             );
             assertEquals(expected,contacts);
             latch.countDown();

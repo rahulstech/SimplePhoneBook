@@ -84,7 +84,7 @@ public class ContactsAdapter extends ListAdapter<Contact,ContactsAdapter.Contact
             Log.d(TAG,"binding contact="+contact);
             String displayPhoto = contact.getDisplayPhoto();
             if (!TextUtils.isEmpty(displayPhoto)) {
-                mDisplayPhoto.setImageURI(Uri.parse(displayPhoto));
+                mDisplayPhoto.setImageURI(contact.getDpUri(itemView.getContext()));
             }
             else {
                 Drawable placeholder = contact.getPlaceholder();

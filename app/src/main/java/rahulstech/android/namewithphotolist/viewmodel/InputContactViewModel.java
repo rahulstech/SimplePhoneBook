@@ -12,8 +12,7 @@ public class InputContactViewModel extends BaseContactViewModel {
 
     private static final int OPERATION_ADD_CONTACT = 1;
     private static final int OPERATION_EDIT_CONTACT = 2;
-
-    private LiveData<Contact> mContactLiveData;
+    private static final int OPERATION_FIND_CONTACT = 3;
 
     private TaskManager mDbTasks = new TaskManager();
 
@@ -21,12 +20,17 @@ public class InputContactViewModel extends BaseContactViewModel {
         super(application);
     }
 
-    public LiveData<Contact> findContactById(long id) {
-        if (null == mContactLiveData) {
-            mContactLiveData = getContactDao().getContactById(id);
-        }
-        return mContactLiveData;
+    public void setFindContactCallback(@NonNull Callback<Contact,Void> callback) {
+        mDbTasks.addTaskCallback(OPERATION_FIND_CONTACT,callback);
     }
+
+    public void findContactById(long id) {
+        mDbTasks.execute(OPERATION_FIND_CONTACT,param -> {
+            Contact contact = getContactDao().getContactById(id);
+            return contact;
+        });
+    }
+
     public void setAddContactCallback(@NonNull Callback<Boolean,Void> callback) {
         mDbTasks.addTaskCallback(OPERATION_ADD_CONTACT,callback);
     }

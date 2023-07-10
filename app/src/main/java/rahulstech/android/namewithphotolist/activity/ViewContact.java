@@ -93,7 +93,7 @@ public class ViewContact extends AppCompatActivity {
             return;
         }
         this.mContact = contact;
-        Uri dpUri = contact.getDpUri();
+        Uri dpUri = contact.getDpUri(this);
         if (null == dpUri) {
             String displayName = contact.getDisplayName();
             String text = displayName.substring(0, 1);

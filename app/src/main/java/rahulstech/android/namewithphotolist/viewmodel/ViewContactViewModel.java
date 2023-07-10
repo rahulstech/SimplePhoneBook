@@ -24,7 +24,7 @@ public class ViewContactViewModel extends BaseContactViewModel {
 
     public LiveData<Contact> findContactById(long id) {
         if (null == mContactLiveData) {
-            mContactLiveData = getContactDao().getContactById(id);
+            mContactLiveData = getContactDao().getLiveContactById(id);
         }
         return mContactLiveData;
     }
